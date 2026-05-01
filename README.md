@@ -1,2 +1,2 @@
 Mykola Makovii
-| Ousama Jaafar Ouhakou
+- Ousama Jaafar Ouhakou
