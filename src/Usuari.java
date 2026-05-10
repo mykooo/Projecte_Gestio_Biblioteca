@@ -11,6 +11,7 @@ public class Usuari {
     private int id;
     private String nom;
     private List<Llibre> llibresPrestats;
+    private List<Prestec> historialPrestecs;
 
 
     // ---------------------------------
@@ -20,6 +21,7 @@ public class Usuari {
     public Usuari(String nom) {
         this.nom = nom;
         this.llibresPrestats = new ArrayList<>();
+        this.historialPrestecs = new ArrayList<>();
         this.id = contadorId++;
     }
 
@@ -31,8 +33,27 @@ public class Usuari {
         llibresPrestats.add(llibre);
     }
 
+    public void afegirPrestecHistorial(Prestec prestec) {
+        historialPrestecs.add(prestec);
+    }
+
+
     public void retornarLlibre(Llibre llibre) {
         llibresPrestats.remove(llibre);
+    }
+
+    public void mostrarHistorial() {
+        if (historialPrestecs.isEmpty()) {
+            System.out.println("Aquest usuari no té préstecs.");
+        } else {
+            for (Prestec prestec : historialPrestecs) {
+                System.out.println(prestec);
+            }
+        }
+    }
+
+    public int quantitatPrestecs() {
+        return historialPrestecs.size();
     }
 
     @Override
@@ -64,4 +85,9 @@ public class Usuari {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    public List<Prestec> getHistorialPrestecs() {
+        return historialPrestecs;
+    }
+
 }
