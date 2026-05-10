@@ -1,6 +1,16 @@
+/**
+ * Gestiona els préstecs de la biblioteca.
+ *
+ * Aquesta classe controla el préstec i retorn de llibres, els préstecs
+ * actius, els préstecs retardats i algunes estadístiques generals.
+ *
+ * @author Mykola
+ * @version 1.0
+ */
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 public class GestorBiblioteca {
 
     // ---------------------------------
@@ -13,6 +23,9 @@ public class GestorBiblioteca {
     // --------- CONSTRUCTOR -----------
     // ---------------------------------
 
+    /**
+     * Crea un gestor de biblioteca sense préstecs actius.
+     */
     public GestorBiblioteca() {
         this.prestecs = new ArrayList<>();
     }
@@ -21,6 +34,15 @@ public class GestorBiblioteca {
     // ---------- FUNCIONES ------------
     // ---------------------------------
 
+    /**
+     * Presta un llibre a un usuari si es compleixen les condicions.
+     *
+     * Comprova que l'usuari no superi el límit màxim de llibres i que el
+     * llibre estigui disponible.
+     *
+     * @param usuari usuari que vol agafar el llibre
+     * @param llibre llibre que es vol prestar
+     */
     public void prestarLlibre(Usuari usuari, Llibre llibre) {
         if (usuari.getLlibresPrestats().size() >= Prestec.MAX_LLIBRES) {
             System.out.println("L'usuari ha arribat al límit de llibres.");
@@ -44,6 +66,15 @@ public class GestorBiblioteca {
         }
     }
 
+    /**
+     * Retorna un llibre prestat per un usuari.
+     *
+     * Si l'usuari té el llibre prestat, s'elimina de la seva llista,
+     * augmenta el stock del llibre i s'elimina el préstec actiu.
+     *
+     * @param usuari usuari que retorna el llibre
+     * @param llibre llibre que es retorna
+     */
     public void retornarLlibre(Usuari usuari, Llibre llibre) {
         if (!usuari.getLlibresPrestats().contains(llibre)) {
             System.out.println("Aquest usuari no té aquest llibre prestat.");
@@ -67,6 +98,11 @@ public class GestorBiblioteca {
         }
     }
 
+    /**
+     * Mostra per consola tots els préstecs actius.
+     *
+     * Si no hi ha préstecs, mostra un missatge informatiu.
+     */
     public void mostrarPrestecs() {
         if (prestecs.isEmpty()) {
             System.out.println("No hi ha préstecs.");
@@ -77,10 +113,20 @@ public class GestorBiblioteca {
         }
     }
 
+    /**
+     * Mostra l'historial de préstecs d'un usuari.
+     *
+     * @param usuari usuari del qual es vol consultar l'historial
+     */
     public void mostrarPrestecsUsuari(Usuari usuari) {
         usuari.mostrarHistorial();
     }
 
+    /**
+     * Mostra per consola tots els préstecs que estan retardats.
+     *
+     * Si no hi ha préstecs retardats, mostra un missatge informatiu.
+     */
     public void mostrarPrestecsRetardats() {
         boolean trobat = false;
 
@@ -96,6 +142,12 @@ public class GestorBiblioteca {
         }
     }
 
+    /**
+     * Cerca l'usuari amb més préstecs registrats.
+     *
+     * @param biblioteca biblioteca d'on s'obtenen els usuaris
+     * @return usuari amb més préstecs o null si no hi ha cap usuari actiu
+     */
     public Usuari usuariMesActiu(Biblioteca biblioteca) {
         Usuari millorUsuari = null;
         int maxPrestecs = 0;
@@ -110,6 +162,14 @@ public class GestorBiblioteca {
         return millorUsuari;
     }
 
+    /**
+     * Mostra estadístiques generals de la biblioteca.
+     *
+     * Inclou el llibre més prestat, l'usuari més actiu i el nombre de
+     * préstecs per categoria.
+     *
+     * @param biblioteca biblioteca de la qual es volen mostrar estadístiques
+     */
     public void mostrarEstadistiques(Biblioteca biblioteca) {
         System.out.println("\n===== ESTADÍSTIQUES =====");
 
