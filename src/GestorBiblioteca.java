@@ -96,6 +96,52 @@ public class GestorBiblioteca {
         }
     }
 
+    public Usuari usuariMesActiu(Biblioteca biblioteca) {
+        Usuari millorUsuari = null;
+        int maxPrestecs = 0;
+
+        for (Usuari usuari : biblioteca.getUsuaris()) {
+            if (usuari.quantitatPrestecs() > maxPrestecs) {
+                maxPrestecs = usuari.quantitatPrestecs();
+                millorUsuari = usuari;
+            }
+        }
+
+        return millorUsuari;
+    }
+
+    public void mostrarEstadistiques(Biblioteca biblioteca) {
+        System.out.println("\n===== ESTADÍSTIQUES =====");
+
+        Llibre llibrePopular = biblioteca.llibreMesPrestat();
+
+        if (llibrePopular != null) {
+            System.out.println("\nLlibre més prestat:");
+            System.out.println(llibrePopular);
+        }
+
+        Usuari usuariActiu = usuariMesActiu(biblioteca);
+
+        if (usuariActiu != null) {
+            System.out.println("\nUsuari més actiu:");
+            System.out.println(usuariActiu);
+        }
+
+        System.out.println("\nPréstecs per categoria:");
+
+        String[] categories = {
+                "Novel·la",
+                "Història",
+                "Ciència",
+                "Tecnologia"
+        };
+
+        for (String categoria : categories) {
+            System.out.println(categoria + ": " + biblioteca.totalPrestecsCategoria(categoria));
+        }
+    }
+
+
 
     // ---------------------------------
     // ------- GETTERS + SETTERS -------
