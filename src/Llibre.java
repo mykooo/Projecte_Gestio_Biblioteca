@@ -1,19 +1,93 @@
 public class Llibre {
+
+    // ---------------------------------
+    // ---------- ATRIBUTOS ------------
+    // ---------------------------------
+
+    private static int contadorId = 1;
+    private int id;
     private String titol;
     private String autor;
-    private boolean prestat;
-    public Llibre(String titol, String autor) {
+    private String categoria;
+    private int stock;
+
+    // ---------------------------------
+    // --------- CONSTRUCTOR -----------
+    // ---------------------------------
+
+    public Llibre(String titol, String autor, String categoria, int stock) {
+        this.id = contadorId++;
         this.titol = titol;
         this.autor = autor;
-        this.prestat = false;
+        this.categoria = categoria;
+        this.stock = stock;
     }
-    public String getTitol() { return titol; }
-    public String getAutor() { return autor; }
-    public boolean esPrestat() { return prestat; }
-    public void prestar() { prestat = true; }
-    public void retornar() { prestat = false; }
+
+    // ---------------------------------
+    // ----------- FUNCIONES -----------
+    // ---------------------------------
+
+    public boolean disponible() {
+        return stock > 0;
+    }
+
+    public void prestar() {
+        if (stock > 0) {
+            stock--;
+        }
+    }
+
+    public void retornar() {
+        stock++;
+    }
+
     @Override
     public String toString() {
-        return titol + " de " + autor + (prestat ? " (En préstec)" : " (Disponible)");
+        return "\n----- LLIBRE -----" +
+                "\nID: " + id +
+                "\nTítol: " + titol +
+                "\nAutor: " + autor +
+                "\nCategoria: " + categoria +
+                "\nStock: " + stock;
+    }
+
+    // ---------------------------------
+    // ------- GETTERS + SETTERS -------
+    // ---------------------------------
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitol() {
+        return titol;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setTitol(String titol) {
+        this.titol = titol;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 }

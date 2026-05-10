@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+/bin/
+=======
 ### IntelliJ IDEA ###
 out/
 !**/src/main/**/out/
@@ -28,3 +31,4 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+>>>>>>> branch 'master' of https://github.com/mykooo/Projecte_Gestio_Biblioteca.git
