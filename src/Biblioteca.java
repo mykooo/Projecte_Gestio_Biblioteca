@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.text.Normalizer;
 
 public class Biblioteca {
 
@@ -45,11 +46,22 @@ public class Biblioteca {
         }
     }
 
+    private String normalitzarText(String text) {
+
+        return Normalizer.normalize(text, Normalizer.Form.NFD)
+                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+    }
+
     public Llibre buscarLlibre(String titol) {
+        String titolNormalitzat = normalitzarText(titol);
+        String llibreNormalitzat;
         for (Llibre llibre : llibres) {
-            if (llibre.getTitol().equalsIgnoreCase(titol)) {
+            llibreNormalitzat = normalitzarText(llibre.getTitol());
+
+            if (llibreNormalitzat.equalsIgnoreCase(titolNormalitzat)) {
                 return llibre;
             }
+
         }
         return null;
     }
@@ -80,8 +92,13 @@ public class Biblioteca {
     }
 
     public Usuari buscarUsuari(String nom) {
+        String nomNormalitzat = normalitzarText(nom);
+        String usuariNormalitzat;
+
         for (Usuari usuari : usuaris) {
-            if (usuari.getNom().equalsIgnoreCase(nom)) {
+            usuariNormalitzat = normalitzarText(usuari.getNom());
+
+            if (usuariNormalitzat.equalsIgnoreCase(nomNormalitzat)) {
                 return usuari;
             }
         }
@@ -105,10 +122,60 @@ public class Biblioteca {
         }
     }
 
+
+    public void llistarPerCategoria(String categoria) {
+        boolean trobat = false;
+        String categoriaNormalitzat = normalitzarText(categoria);
+        String llibreNormalitzat;
+
+        for (Llibre llibre : llibres) {
+            llibreNormalitzat = normalitzarText(llibre.getCategoria());
+
+            if (llibreNormalitzat.equalsIgnoreCase(categoriaNormalitzat)) {
+                System.out.println(llibre);
+                trobat = true;
+            }
+        }
+
+        if (!trobat) {
+            System.out.println("No hi ha llibres d'aquesta categoria.");
+        }
+    }
+
+    public Llibre llibreMesPrestat() {
+        if (llibres.isEmpty()) {
+            return null;
+        }
+
+        Llibre mesPrestat = llibres.get(0);
+
+        for (Llibre llibre : llibres) {
+            if (llibre.getVegadesPrestat() > mesPrestat.getVegadesPrestat()) {
+                mesPrestat = llibre;
+            }
+        }
+
+        return mesPrestat;
+    }
+
+    public int totalPrestecsCategoria(String categoria) {
+        int total = 0;
+        String categoriaNormalitzat = normalitzarText(categoria);
+        String llibreNormalitzat;
+
+        for (Llibre llibre : llibres) {
+            llibreNormalitzat = normalitzarText(llibre.getCategoria());
+            if (llibreNormalitzat.equalsIgnoreCase(categoriaNormalitzat)) {
+                total += llibre.getVegadesPrestat();
+            }
+        }
+
+        return total;
+    }
+
     // ---------------------------------
     // ------- GETTERS + SETTERS -------
     // ---------------------------------
-
 
     public List<Llibre> getLlibres() {
         return llibres;
