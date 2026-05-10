@@ -10,7 +10,7 @@ public class Llibre {
     private String autor;
     private String categoria;
     private int stock;
-
+    private int vegadesPrestat; 
     // ---------------------------------
     // --------- CONSTRUCTOR -----------
     // ---------------------------------
@@ -21,6 +21,7 @@ public class Llibre {
         this.autor = autor;
         this.categoria = categoria;
         this.stock = stock;
+        this.vegadesPrestat = 0;  
     }
 
     // ---------------------------------
@@ -34,8 +35,10 @@ public class Llibre {
     public void prestar() {
         if (stock > 0) {
             stock--;
+            vegadesPrestat++;
         }
     }
+
 
     public void retornar() {
         stock++;
@@ -90,4 +93,8 @@ public class Llibre {
     public void setStock(int stock) {
         this.stock = stock;
     }
+    public int getVegadesPrestat() {
+        return vegadesPrestat;
+    }
+
 }
