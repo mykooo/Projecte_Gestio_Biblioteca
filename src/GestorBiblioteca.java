@@ -44,6 +44,59 @@ public class GestorBiblioteca {
         }
     }
 
+    public void retornarLlibre(Usuari usuari, Llibre llibre) {
+        if (!usuari.getLlibresPrestats().contains(llibre)) {
+            System.out.println("Aquest usuari no té aquest llibre prestat.");
+        } else {
+            usuari.retornarLlibre(llibre);
+            llibre.retornar();
+
+            Prestec prestecRetornat = null;
+
+            for (Prestec prestec : prestecs) {
+                if (prestec.getUsuari() == usuari && prestec.getLlibre() == llibre) {
+                    prestecRetornat = prestec;
+                }
+            }
+
+            if (prestecRetornat != null) {
+                prestecs.remove(prestecRetornat);
+            }
+
+            System.out.println("Llibre retornat correctament.");
+        }
+    }
+
+    public void mostrarPrestecs() {
+        if (prestecs.isEmpty()) {
+            System.out.println("No hi ha préstecs.");
+        } else {
+            for (Prestec prestec : prestecs) {
+                System.out.println(prestec);
+            }
+        }
+    }
+
+    public void mostrarPrestecsUsuari(Usuari usuari) {
+        usuari.mostrarHistorial();
+    }
+
+    public void mostrarPrestecsRetardats() {
+        boolean trobat = false;
+
+        for (Prestec prestec : prestecs) {
+            if (prestec.estaRetardat()) {
+                System.out.println(prestec);
+                trobat = true;
+            }
+        }
+
+        if (!trobat) {
+            System.out.println("No hi ha préstecs retardats.");
+        }
+    }
+
+
     // ---------------------------------
     // ------- GETTERS + SETTERS -------
     // ---------------------------------
